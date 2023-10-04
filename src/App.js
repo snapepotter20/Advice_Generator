@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      advice: "",
+    };
+  }
+  componentDidMount() {
+    console.log("component mounted");
+    // this.fetchAdvice();
+  }
+
+  fetchAdvice = () => {
+    fetch("https://api.adviceslip.com/advice")
+      .then((response) => {
+         return response.json();
+      })
+      .then((data)=>{
+        console.log('data',data)
+        const adviceUpdate=data.slip.advice;
+         this.setState({advice:adviceUpdate})
+      })
+      .catch((error) => {
+         
+      });
+  };
+  render() {
+    return (
+      <div className="App">
+        <div className="Card">
+         <h2 className="heading">{this.state.advice}</h2>
+         <button className="button" onClick={this.fetchAdvice}><sapn>GIVE ME ADVICE!</sapn></button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
