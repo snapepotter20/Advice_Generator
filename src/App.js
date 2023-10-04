@@ -6,6 +6,7 @@ class App extends Component {
     super();
     this.state = {
       advice: "",
+      nextAdvice:false,
     };
   }
   componentDidMount() {
@@ -14,6 +15,9 @@ class App extends Component {
   }
 
   fetchAdvice = () => {
+    if(!this.state.nextAdvice)
+     this.setState({nextAdvice:true});
+     console.log("next advice",this.nextAdvice);
     fetch("https://api.adviceslip.com/advice")
       .then((response) => {
          return response.json();
@@ -32,7 +36,9 @@ class App extends Component {
       <div className="App">
         <div className="Card">
          <h2 className="heading">{this.state.advice}</h2>
-         <button className="button" onClick={this.fetchAdvice}><sapn>GIVE ME ADVICE!</sapn></button>
+         <button className="button" onClick={this.fetchAdvice}>
+          { this.state.nextAdvice ? <span>Next advice!</span>:<sapn>GIVE ME ADVICE!</sapn>}
+          </button>
         </div>
       </div>
     );
