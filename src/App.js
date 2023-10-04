@@ -17,7 +17,6 @@ class App extends Component {
   fetchAdvice = () => {
     if(!this.state.nextAdvice)
      this.setState({nextAdvice:true});
-     console.log("next advice",this.nextAdvice);
     fetch("https://api.adviceslip.com/advice")
       .then((response) => {
          return response.json();
